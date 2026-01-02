@@ -37,7 +37,7 @@ class Job(models.Model):
         return f"{self.customer_name} - {self.vehicle_registration} ({self.status})"
     
     def get_absolute_url(self):
-        return reverse('job_detail', kwargs={'pk': self.pk})
+        return reverse('jobs:job_detail', kwargs={'pk': self.pk})
     
     def get_status_color(self):
         """Return color class for status"""

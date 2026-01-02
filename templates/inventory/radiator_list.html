@@ -33,9 +33,9 @@
                                     {{ radiator.quantity }}
                                 </span>
                             </td>
-                            <td>${{ radiator.cost_price }}</td>
-                            <td>${{ radiator.selling_price }}</td>
-                            <td>${{ radiator.get_profit_margin }}</td>
+                            <td>R{{ radiator.cost_price }}</td>
+                            <td>R{{ radiator.selling_price }}</td>
+                            <td>R{{ radiator.get_profit_margin }}</td>
                             <td class="actions">
                                 <a href="{% url 'inventory:radiator_update' radiator.pk %}" class="btn btn-edit btn-sm">Edit</a>
                                 <a href="{% url 'inventory:radiator_delete' radiator.pk %}" class="btn btn-danger btn-sm">Delete</a>

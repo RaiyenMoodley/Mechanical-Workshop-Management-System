@@ -27,7 +27,7 @@ def job_create(request):
         if form.is_valid():
             job = form.save()
             messages.success(request, f'Job for {job.customer_name} has been created successfully!')
-            return redirect('job_detail', pk=job.pk)
+            return redirect('jobs:job_detail', pk=job.pk)
     else:
         form = JobForm()
     return render(request, 'jobs/job_form.html', {'form': form, 'title': 'Add New Job'})
@@ -42,7 +42,7 @@ def job_update(request, pk):
         if form.is_valid():
             job = form.save()
             messages.success(request, f'Job for {job.customer_name} has been updated successfully!')
-            return redirect('job_detail', pk=job.pk)
+            return redirect('jobs:job_detail', pk=job.pk)
     else:
         form = JobForm(instance=job)
     return render(request, 'jobs/job_form.html', {'form': form, 'job': job, 'title': 'Edit Job'})
@@ -56,5 +56,5 @@ def job_delete(request, pk):
         customer_name = job.customer_name
         job.delete()
         messages.success(request, f'Job for {customer_name} has been deleted successfully!')
-        return redirect('job_list')
+        return redirect('jobs:job_list')
     return render(request, 'jobs/job_confirm_delete.html', {'job': job})

@@ -20,7 +20,7 @@ def radiator_create(request):
         if form.is_valid():
             radiator = form.save()
             messages.success(request, f'{radiator.name} has been added to inventory successfully!')
-            return redirect('radiator_list')
+            return redirect('inventory:radiator_list')
     else:
         form = RadiatorForm()
     return render(request, 'inventory/radiator_form.html', {'form': form, 'title': 'Add New Radiator'})
@@ -35,7 +35,7 @@ def radiator_update(request, pk):
         if form.is_valid():
             radiator = form.save()
             messages.success(request, f'{radiator.name} has been updated successfully!')
-            return redirect('radiator_list')
+            return redirect('inventory:radiator_list')
     else:
         form = RadiatorForm(instance=radiator)
     return render(request, 'inventory/radiator_form.html', {'form': form, 'radiator': radiator, 'title': 'Edit Radiator'})
@@ -49,5 +49,5 @@ def radiator_delete(request, pk):
         radiator_name = radiator.name
         radiator.delete()
         messages.success(request, f'{radiator_name} has been deleted from inventory successfully!')
-        return redirect('radiator_list')
+        return redirect('inventory:radiator_list')
     return render(request, 'inventory/radiator_confirm_delete.html', {'radiator': radiator})

@@ -21,7 +21,7 @@ class Radiator(models.Model):
         return f"{self.name} (Qty: {self.quantity})"
     
     def get_absolute_url(self):
-        return reverse('radiator_list')
+        return reverse('inventory:radiator_list')
     
     def is_low_stock(self):
         """Check if stock is low (quantity < 5)"""
