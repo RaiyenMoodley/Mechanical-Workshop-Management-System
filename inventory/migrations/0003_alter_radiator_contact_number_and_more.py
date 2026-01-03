@@ -13,12 +13,12 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='radiator',
             name='contact_number',
-            field=models.CharField(max_length=20),
+            field=models.CharField(max_length=20, null=True),
         ),
         migrations.AlterField(
             model_name='radiator',
             name='customer_name',
-            field=models.CharField(max_length=200),
+            field=models.CharField(max_length=200, null=True),
         ),
         migrations.AlterField(
             model_name='radiator',
