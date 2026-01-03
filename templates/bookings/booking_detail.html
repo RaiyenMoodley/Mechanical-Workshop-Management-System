@@ -1,0 +1,113 @@
+{% extends 'base.html' %}
+
+{% block title %}Booking Details - Workshop Manager{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="page-header">
+        <h1>Booking Details</h1>
+        <div class="header-actions">
+            <a href="{% url 'bookings:booking_update' booking.pk %}" class="btn btn-edit">Edit</a>
+            <a href="{% url 'bookings:booking_delete' booking.pk %}" class="btn btn-danger">Delete</a>
+            <a href="{% url 'bookings:booking_calendar' %}" class="btn btn-secondary">Back to Calendar</a>
+        </div>
+    </div>
+
+    <div class="detail-card">
+        <div class="detail-section">
+            <h2>Customer Information</h2>
+            <div class="detail-grid">
+                <div class="detail-item">
+                    <strong>Customer Name:</strong>
+                    <span>{{ booking.customer_name }}</span>
+                </div>
+                <div class="detail-item">
+                    <strong>Contact Number:</strong>
+                    <span>{{ booking.contact_number }}</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="detail-section">
+            <h2>Booking Information</h2>
+            <div class="detail-grid">
+                <div class="detail-item">
+                    <strong>Booking Type:</strong>
+                    <span>{{ booking.get_booking_type_display }}</span>
+                </div>
+                <div class="detail-item">
+                    <strong>Status:</strong>
+                    <span class="status-badge {{ booking.get_status_color }}">{{ booking.get_status_display }}</span>
+                </div>
+                <div class="detail-item">
+                    <strong>Date:</strong>
+                    <span>{{ booking.booking_date|date:"F d, Y" }}</span>
+                </div>
+                <div class="detail-item">
+                    <strong>Time:</strong>
+                    <span>{% if booking.all_day %}All Day{% else %}{{ booking.booking_time|time:"g:i A" }}{% endif %}</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="detail-section">
+            <h2>Details</h2>
+            <div class="detail-grid">
+                {% if booking.booking_type == 'vehicle' %}
+                <div class="detail-item">
+                    <strong>Work Type:</strong>
+                    <span>{{ booking.get_work_type_display }}</span>
+                </div>
+                <div class="detail-item">
+                    <strong>Vehicle Make:</strong>
+                    <span>{{ booking.vehicle_make }}</span>
+                </div>
+                <div class="detail-item">
+                    <strong>Vehicle Model:</strong>
+                    <span>{{ booking.vehicle_model }}</span>
+                </div>
+                {% else %}
+                <div class="detail-item">
+                    <strong>Part Type:</strong>
+                    <span>{{ booking.get_part_type_display }}</span>
+                </div>
+                <div class="detail-item full-width">
+                    <strong>Description:</strong>
+                    <span>{{ booking.description }}</span>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+
+        {% if booking.notes %}
+        <div class="detail-section">
+            <h2>Notes</h2>
+            <p>{{ booking.notes }}</p>
+        </div>
+        {% endif %}
+
+        {% if booking.linked_job %}
+        <div class="detail-section">
+            <h2>Linked Job</h2>
+            <p>
+                <a href="{% url 'jobs:job_detail' booking.linked_job.pk %}" class="btn btn-view btn-sm">
+                    View Job: {{ booking.linked_job.vehicle_registration }}
+                </a>
+            </p>
+        </div>
+        {% endif %}
+
+        {% if booking.linked_radiator %}
+        <div class="detail-section">
+            <h2>Linked Radiator Order</h2>
+            <p>
+                <a href="{% url 'inventory:radiator_list' %}" class="btn btn-view btn-sm">
+                    View Radiator Order
+                </a>
+            </p>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
+

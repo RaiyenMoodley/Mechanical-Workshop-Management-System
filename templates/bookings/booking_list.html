@@ -1,0 +1,77 @@
+{% extends 'base.html' %}
+
+{% block title %}Bookings List - Workshop Manager{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="page-header">
+        <h1>Bookings List</h1>
+        <div class="header-actions">
+            <a href="{% url 'bookings:booking_create' %}" class="btn btn-primary">Create New Booking</a>
+            <a href="{% url 'bookings:booking_calendar' %}" class="btn btn-secondary">Calendar View</a>
+        </div>
+    </div>
+
+    {% if bookings %}
+        <div class="table-container">
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Time</th>
+                        <th>Customer Name</th>
+                        <th>Contact</th>
+                        <th>Type</th>
+                        <th>Description</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for booking in bookings %}
+                        <tr>
+                            <td>{{ booking.booking_date|date:"M d, Y" }}</td>
+                            <td>
+                                {% if booking.all_day %}
+                                    All Day
+                                {% else %}
+                                    {{ booking.booking_time|time:"g:i A" }}
+                                {% endif %}
+                            </td>
+                            <td><strong>{{ booking.customer_name }}</strong></td>
+                            <td>{{ booking.contact_number }}</td>
+                            <td>
+                                <span style="color: {{ booking.get_booking_type_color }};">
+                                    {{ booking.get_booking_type_display }}
+                                </span>
+                            </td>
+                            <td>
+                                {% if booking.booking_type == 'vehicle' %}
+                                    {% if booking.vehicle_make %}{{ booking.vehicle_make }}{% endif %}
+                                    {% if booking.vehicle_model %} {{ booking.vehicle_model }}{% endif %}
+                                    {% if not booking.vehicle_make and not booking.vehicle_model %}-{% endif %}
+                                {% else %}
+                                    {{ booking.description|truncatewords:10|default:"-" }}
+                                {% endif %}
+                            </td>
+                            <td>
+                                <span class="status-badge {{ booking.get_status_color }}">{{ booking.get_status_display }}</span>
+                            </td>
+                            <td class="actions">
+                                <a href="{% url 'bookings:booking_detail' booking.pk %}" class="btn btn-view btn-sm">View</a>
+                                <a href="{% url 'bookings:booking_update' booking.pk %}" class="btn btn-edit btn-sm">Edit</a>
+                                <a href="{% url 'bookings:booking_delete' booking.pk %}" class="btn btn-danger btn-sm">Delete</a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    {% else %}
+        <div class="empty-state">
+            <p>No bookings found. <a href="{% url 'bookings:booking_create' %}">Create your first booking</a></p>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}
+

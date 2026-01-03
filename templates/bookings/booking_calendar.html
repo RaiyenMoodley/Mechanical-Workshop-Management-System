@@ -1,0 +1,72 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Booking Calendar - Workshop Manager{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="page-header">
+        <h1>Booking Calendar</h1>
+        <div class="header-actions">
+            <a href="{% url 'bookings:booking_create' %}" class="btn btn-primary">Create New Booking</a>
+            <a href="{% url 'bookings:booking_list' %}" class="btn btn-secondary">List View</a>
+        </div>
+    </div>
+
+    <div class="calendar-legend" style="margin-bottom: 1rem; padding: 1rem; background: #f7fafc; border-radius: 8px;">
+        <strong>Legend:</strong>
+        <span style="display: inline-block; width: 20px; height: 20px; background: #667eea; margin-left: 1rem; margin-right: 0.5rem; vertical-align: middle; border-radius: 4px;"></span> Vehicle
+        <span style="display: inline-block; width: 20px; height: 20px; background: #48bb78; margin-left: 1rem; margin-right: 0.5rem; vertical-align: middle; border-radius: 4px;"></span> Radiator
+    </div>
+
+    <div id="calendar" style="background: white; padding: 1rem; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);"></div>
+</div>
+
+<!-- FullCalendar CSS -->
+<link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.10/index.global.min.css" rel="stylesheet">
+
+<!-- FullCalendar JS -->
+<script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.10/index.global.min.js"></script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const calendarEl = document.getElementById('calendar');
+    const calendar = new FullCalendar.Calendar(calendarEl, {
+        initialView: 'dayGridMonth',
+        headerToolbar: {
+            left: 'prev,next today',
+            center: 'title',
+            right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
+        },
+        events: '{% url "bookings:booking_events_api" %}',
+        eventClick: function(info) {
+            // Navigate to booking detail page
+            window.location.href = '/bookings/' + info.event.id + '/';
+        },
+        eventDisplay: 'block',
+        height: 'auto',
+        editable: false,
+        selectable: false,
+        eventTimeFormat: {
+            hour: '2-digit',
+            minute: '2-digit',
+            hour12: true
+        },
+        slotMinTime: '06:00:00',
+        slotMaxTime: '20:00:00',
+    });
+    
+    calendar.render();
+});
+</script>
+
+<style>
+.fc-event {
+    cursor: pointer;
+}
+.fc-event:hover {
+    opacity: 0.8;
+}
+</style>
+{% endblock %}
+

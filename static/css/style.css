@@ -220,6 +220,11 @@ body {
     color: #22543d;
 }
 
+.status-blue {
+    background-color: #bee3f8;
+    color: #2c5282;
+}
+
 .status-default {
     background-color: #e2e8f0;
     color: #4a5568;
@@ -347,6 +352,10 @@ body {
 .detail-item span {
     color: #2d3748;
     font-size: 1rem;
+}
+
+.detail-item.full-width {
+    grid-column: 1 / -1;
 }
 
 .notes {

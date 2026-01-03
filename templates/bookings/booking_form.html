@@ -1,0 +1,218 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ title }} - Workshop Manager{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="page-header">
+        <h1>{{ title }}</h1>
+        <a href="{% url 'bookings:booking_calendar' %}" class="btn btn-secondary">Back to Calendar</a>
+    </div>
+
+    <div class="form-card">
+        <form method="post" id="booking-form">
+            {% csrf_token %}
+            
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="{{ form.booking_type.id_for_label }}">Booking Type *</label>
+                    {{ form.booking_type }}
+                    {% if form.booking_type.errors %}
+                        <div class="error">{{ form.booking_type.errors }}</div>
+                    {% endif %}
+                </div>
+
+                <div class="form-group">
+                    <label for="{{ form.status.id_for_label }}">Status *</label>
+                    {{ form.status }}
+                    {% if form.status.errors %}
+                        <div class="error">{{ form.status.errors }}</div>
+                    {% endif %}
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="{{ form.customer_name.id_for_label }}">Customer Name *</label>
+                    {{ form.customer_name }}
+                    {% if form.customer_name.errors %}
+                        <div class="error">{{ form.customer_name.errors }}</div>
+                    {% endif %}
+                </div>
+
+                <div class="form-group">
+                    <label for="{{ form.contact_number.id_for_label }}">Contact Number *</label>
+                    {{ form.contact_number }}
+                    {% if form.contact_number.errors %}
+                        <div class="error">{{ form.contact_number.errors }}</div>
+                    {% endif %}
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="{{ form.booking_date.id_for_label }}">Booking Date *</label>
+                    {{ form.booking_date }}
+                    {% if form.booking_date.errors %}
+                        <div class="error">{{ form.booking_date.errors }}</div>
+                    {% endif %}
+                </div>
+
+                <div class="form-group">
+                    <label for="{{ form.all_day.id_for_label }}" style="display: flex; align-items: center; gap: 0.5rem; margin-top: 1.5rem;">
+                        {{ form.all_day }}
+                        <span>All Day</span>
+                    </label>
+                    {% if form.all_day.errors %}
+                        <div class="error">{{ form.all_day.errors }}</div>
+                    {% endif %}
+                </div>
+
+                <div class="form-group" id="time-field-group">
+                    <label for="{{ form.booking_time.id_for_label }}">Booking Time *</label>
+                    {{ form.booking_time }}
+                    {% if form.booking_time.errors %}
+                        <div class="error">{{ form.booking_time.errors }}</div>
+                    {% endif %}
+                </div>
+            </div>
+
+            <div class="form-group" id="work-type-group" style="display: none;">
+                <label for="{{ form.work_type.id_for_label }}">Work Type *</label>
+                {{ form.work_type }}
+                {% if form.work_type.errors %}
+                    <div class="error">{{ form.work_type.errors }}</div>
+                {% endif %}
+            </div>
+
+            <div class="form-group" id="part-type-group" style="display: none;">
+                <label for="{{ form.part_type.id_for_label }}">Part Type *</label>
+                {{ form.part_type }}
+                {% if form.part_type.errors %}
+                    <div class="error">{{ form.part_type.errors }}</div>
+                {% endif %}
+            </div>
+
+            <div class="form-group" id="vehicle-fields-group" style="display: none;">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="{{ form.vehicle_make.id_for_label }}">Vehicle Make *</label>
+                        {{ form.vehicle_make }}
+                        {% if form.vehicle_make.errors %}
+                            <div class="error">{{ form.vehicle_make.errors }}</div>
+                        {% endif %}
+                    </div>
+                    <div class="form-group">
+                        <label for="{{ form.vehicle_model.id_for_label }}">Vehicle Model *</label>
+                        {{ form.vehicle_model }}
+                        {% if form.vehicle_model.errors %}
+                            <div class="error">{{ form.vehicle_model.errors }}</div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group" id="description-group" style="display: none;">
+                <label for="{{ form.description.id_for_label }}">Description *</label>
+                {{ form.description }}
+                {% if form.description.errors %}
+                    <div class="error">{{ form.description.errors }}</div>
+                {% endif %}
+                <small class="form-help">Enter radiator/part description</small>
+            </div>
+
+            <div class="form-group">
+                <label for="{{ form.notes.id_for_label }}">Notes</label>
+                {{ form.notes }}
+                {% if form.notes.errors %}
+                    <div class="error">{{ form.notes.errors }}</div>
+                {% endif %}
+                <small class="form-help">Additional notes (optional)</small>
+            </div>
+
+            <div class="form-actions">
+                <button type="submit" class="btn btn-primary">Save Booking</button>
+                <a href="{% url 'bookings:booking_calendar' %}" class="btn btn-secondary">Cancel</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+function toggleBookingFields() {
+    const bookingType = document.getElementById('id_booking_type').value;
+    const workTypeGroup = document.getElementById('work-type-group');
+    const partTypeGroup = document.getElementById('part-type-group');
+    const vehicleFieldsGroup = document.getElementById('vehicle-fields-group');
+    const descriptionGroup = document.getElementById('description-group');
+    const workTypeField = document.getElementById('id_work_type');
+    const partTypeField = document.getElementById('id_part_type');
+    const vehicleMakeField = document.getElementById('id_vehicle_make');
+    const vehicleModelField = document.getElementById('id_vehicle_model');
+    const descriptionField = document.getElementById('id_description');
+    
+    if (bookingType === 'vehicle') {
+        workTypeGroup.style.display = 'block';
+        partTypeGroup.style.display = 'none';
+        vehicleFieldsGroup.style.display = 'block';
+        descriptionGroup.style.display = 'none';
+        workTypeField.required = true;
+        partTypeField.required = false;
+        vehicleMakeField.required = true;
+        vehicleModelField.required = true;
+        descriptionField.required = false;
+        partTypeField.value = '';
+        descriptionField.value = '';
+    } else if (bookingType === 'radiator') {
+        workTypeGroup.style.display = 'none';
+        partTypeGroup.style.display = 'block';
+        vehicleFieldsGroup.style.display = 'none';
+        descriptionGroup.style.display = 'block';
+        workTypeField.required = false;
+        partTypeField.required = true;
+        vehicleMakeField.required = false;
+        vehicleModelField.required = false;
+        descriptionField.required = true;
+        workTypeField.value = '';
+        vehicleMakeField.value = '';
+        vehicleModelField.value = '';
+    } else {
+        workTypeGroup.style.display = 'none';
+        partTypeGroup.style.display = 'none';
+        vehicleFieldsGroup.style.display = 'none';
+        descriptionGroup.style.display = 'none';
+        workTypeField.required = false;
+        partTypeField.required = false;
+        vehicleMakeField.required = false;
+        vehicleModelField.required = false;
+        descriptionField.required = false;
+    }
+}
+
+function toggleTimeField() {
+    const allDay = document.getElementById('id_all_day').checked;
+    const timeFieldGroup = document.getElementById('time-field-group');
+    const timeField = document.getElementById('id_booking_time');
+    
+    if (allDay) {
+        timeFieldGroup.style.display = 'none';
+        timeField.required = false;
+        timeField.value = '';
+    } else {
+        timeFieldGroup.style.display = 'block';
+        timeField.required = true;
+    }
+}
+
+// Initialize on page load
+document.addEventListener('DOMContentLoaded', function() {
+    toggleBookingFields();
+    toggleTimeField();
+    
+    // Add event listeners
+    document.getElementById('id_booking_type').addEventListener('change', toggleBookingFields);
+    document.getElementById('id_all_day').addEventListener('change', toggleTimeField);
+});
+</script>
+{% endblock %}
+
