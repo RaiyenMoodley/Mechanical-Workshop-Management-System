@@ -24,6 +24,7 @@ class Radiator(models.Model):
     part_type = models.CharField(max_length=50, choices=PART_TYPE_CHOICES, default='Radiator')
     customer_name = models.CharField(max_length=200, blank=True, null=True)
     contact_number = models.CharField(max_length=20, blank=True, null=True)
+    invoice_number = models.CharField(max_length=100, blank=True, null=True)
     notes = models.TextField(blank=True)
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='Pending')
     date_received = models.DateField(auto_now_add=True)

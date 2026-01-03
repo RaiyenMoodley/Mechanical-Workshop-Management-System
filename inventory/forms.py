@@ -13,6 +13,7 @@ class RadiatorForm(forms.ModelForm):
             'customer_name',
             'contact_number',
             'status',
+            'invoice_number',
             'notes',
         ]
         widgets = {
@@ -20,7 +21,7 @@ class RadiatorForm(forms.ModelForm):
                 'class': 'form-control',
                 'placeholder': 'Enter customer name'
             }),
-            'contact_number': forms.TextInput(attrs={ # nect to cust nam
+            'contact_number': forms.TextInput(attrs={
                 'class': 'form-control',
                 'placeholder': 'Enter contact number'
             }),
@@ -29,6 +30,10 @@ class RadiatorForm(forms.ModelForm):
             }),
             'status': forms.Select(attrs={
                 'class': 'form-control'
+            }),
+            'invoice_number': forms.TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'Enter invoice number (optional)'
             }),
             'name': forms.TextInput(attrs={
                 'class': 'form-control',
