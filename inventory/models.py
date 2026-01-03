@@ -53,4 +53,4 @@ class Radiator(models.Model):
             'In Progress': 'status-orange',
             'Completed': 'status-green',
         }
-        return colors.get(self.status, 'status-default')
+        return colors.get(str(self.status), 'status-default')
