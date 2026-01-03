@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 
-{% block title %}Dashboard - Workshop Manager{% endblock %}
+{% block title %}Dashboard - Magnum Radiators Workshop Manager{% endblock %}
 
 {% block content %}
 <div class="container">
@@ -42,7 +42,7 @@
     <div class="dashboard-grid">
         <div class="dashboard-section">
             <div class="section-header">
-                <h2>Recent Jobs</h2>
+                <h2>Recent Vehicle Checkins</h2>
                 <a href="{% url 'jobs:job_list' %}" class="btn btn-secondary btn-sm">View All</a>
             </div>
             {% if recent_jobs %}
@@ -61,14 +61,14 @@
                 </div>
             {% else %}
                 <div class="empty-state">
-                    <p>No jobs yet. <a href="{% url 'jobs:job_create' %}">Create your first job</a></p>
+                    <p>No jobs yet. <a href="{% url 'jobs:job_create' %}">Create your first vehicle checkin</a></p>
                 </div>
             {% endif %}
         </div>
 
         <div class="dashboard-section">
             <div class="section-header">
-                <h2>Recent Parts Orders</h2>
+                <h2>Recent Radiator Checkins</h2>
                 <a href="{% url 'inventory:radiator_list' %}" class="btn btn-secondary btn-sm">View All</a>
             </div>
             {% if recent_parts_orders %}
@@ -87,7 +87,7 @@
                 </div>
             {% else %}
                 <div class="empty-state">
-                    <p>No parts orders yet. <a href="{% url 'inventory:radiator_create' %}">Create your first parts order</a></p>
+                    <p>No radiator checkins yet. <a href="{% url 'inventory:radiator_create' %}">Create your first radiator checkin</a></p>
                 </div>
             {% endif %}
         </div>
@@ -96,10 +96,10 @@
     <div class="quick-actions">
         <h2>Quick Actions</h2>
         <div class="action-buttons">
-            <a href="{% url 'jobs:job_create' %}" class="btn btn-primary btn-large">➕ Add New Job</a>
-            <a href="{% url 'inventory:radiator_create' %}" class="btn btn-primary btn-large">📦 Add New Parts Order</a>
-            <a href="{% url 'jobs:job_list' %}" class="btn btn-secondary btn-large">📋 View All Jobs</a>
-            <a href="{% url 'inventory:radiator_list' %}" class="btn btn-secondary btn-large">📊 View Parts Orders</a>
+            <a href="{% url 'jobs:job_create' %}" class="btn btn-primary btn-large">➕ Add New Vehicle Checkin</a>
+            <a href="{% url 'inventory:radiator_create' %}" class="btn btn-primary btn-large">📦 Add New Radiator Checkin</a>
+            <a href="{% url 'jobs:job_list' %}" class="btn btn-secondary btn-large">📋 View All Vehicle Checkin</a>
+            <a href="{% url 'inventory:radiator_list' %}" class="btn btn-secondary btn-large">📊 View Radiator Checkins</a>
         </div>
     </div>
 </div>

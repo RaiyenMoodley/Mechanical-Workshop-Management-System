@@ -1,13 +1,13 @@
 {% extends 'base.html' %}
 
-{% block title %}{{ job.customer_name }} - Job Details{% endblock %}
+{% block title %}{{ job.customer_name }} - Vehicle Checkin Details{% endblock %}
 
 {% block content %}
 <div class="container">
     <div class="page-header">
-        <h1>Job Details</h1>
+        <h1>Vehicle Checkin Details</h1>
         <div class="header-actions">
-            <a href="{% url 'jobs:job_update' job.pk %}" class="btn btn-edit">Edit Job</a>
+            <a href="{% url 'jobs:job_update' job.pk %}" class="btn btn-edit">Edit Vehicle Checkin</a>
             <a href="{% url 'jobs:job_list' %}" class="btn btn-secondary">Back to List</a>
         </div>
     </div>
@@ -51,7 +51,7 @@
         </div>
 
         <div class="detail-section">
-            <h3>Job Information</h3>
+            <h3>Vehicle Checkin Information</h3>
             <div class="detail-grid">
                 <div class="detail-item">
                     <label>Work Type:</label>
@@ -88,8 +88,8 @@
         {% endif %}
 
         <div class="detail-actions">
-            <a href="{% url 'jobs:job_update' job.pk %}" class="btn btn-primary">Edit Job</a>
-            <a href="{% url 'jobs:job_delete' job.pk %}" class="btn btn-danger">Delete Job</a>
+            <a href="{% url 'jobs:job_update' job.pk %}" class="btn btn-primary">Edit Checkin</a>
+            <a href="{% url 'jobs:job_delete' job.pk %}" class="btn btn-danger">Delete Checkin</a>
         </div>
     </div>
 </div>

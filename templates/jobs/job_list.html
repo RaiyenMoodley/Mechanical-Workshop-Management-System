@@ -1,12 +1,12 @@
 {% extends 'base.html' %}
 
-{% block title %}Jobs - Workshop Manager{% endblock %}
+{% block title %}Vehicle Checkin - Workshop Manager{% endblock %}
 
 {% block content %}
 <div class="container">
     <div class="page-header">
-        <h1>Workshop Jobs</h1>
-        <a href="{% url 'jobs:job_create' %}" class="btn btn-primary">Add New Job</a>
+        <h1>Workshop Vehicle Checkin</h1>
+        <a href="{% url 'jobs:job_create' %}" class="btn btn-primary">Add New Vehicle Checkin</a>
     </div>
 
     {% if jobs %}
@@ -38,7 +38,7 @@
         </div>
     {% else %}
         <div class="empty-state">
-            <p>No jobs found. <a href="{% url 'jobs:job_create' %}">Create your first job</a></p>
+            <p>No vehicle checkins found. <a href="{% url 'jobs:job_create' %}">Create your first vehicle checkin</a></p>
         </div>
     {% endif %}
 </div>

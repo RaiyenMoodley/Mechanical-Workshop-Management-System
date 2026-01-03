@@ -4,12 +4,14 @@ from django.utils import timezone
 
 
 class Radiator(models.Model):
-    """Model for tracking parts orders (Radiators, Intercoolers, Fuel Tanks)"""
+    """Model for tracking parts orders (Radiators, Oil Coolers, Intercoolers, Fuel Tanks and Others)"""
     
     PART_TYPE_CHOICES = [
         ('Radiator', 'Radiator'),
+        ('Oil Cooler', 'Oil Cooler'),
         ('Intercooler', 'Intercooler'),
         ('Fuel Tank', 'Fuel Tank'),
+        ('Other', 'Other'),
     ]
     
     STATUS_CHOICES = [

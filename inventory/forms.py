@@ -16,23 +16,23 @@ class RadiatorForm(forms.ModelForm):
             'notes',
         ]
         widgets = {
-            'name': forms.TextInput(attrs={
-                'class': 'form-control',
-                'placeholder': 'Enter radiator/part name/model'
-            }),
-            'part_type': forms.Select(attrs={
-                'class': 'form-control'
-            }),
             'customer_name': forms.TextInput(attrs={
                 'class': 'form-control',
                 'placeholder': 'Enter customer name'
             }),
-            'contact_number': forms.TextInput(attrs={
+            'contact_number': forms.TextInput(attrs={ # nect to cust nam
                 'class': 'form-control',
                 'placeholder': 'Enter contact number'
             }),
+            'part_type': forms.Select(attrs={
+                'class': 'form-control'
+            }),
             'status': forms.Select(attrs={
                 'class': 'form-control'
+            }),
+            'name': forms.TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'Enter radiator/part name/model'
             }),
             'notes': forms.Textarea(attrs={
                 'class': 'form-control',
