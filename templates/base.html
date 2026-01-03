@@ -18,6 +18,7 @@
                 <a href="{% url 'bookings:booking_calendar' %}">Bookings</a>
                 <a href="{% url 'jobs:job_list' %}">Vehicles</a>
                 <a href="{% url 'inventory:radiator_list' %}">Radiators</a>
+                <a href="{% url 'reports:reports_page' %}">Reports</a>
                 <form method="post" action="{% url 'logout' %}" style="display: inline; margin: 0;">
                     {% csrf_token %}
                     <button type="submit" class="nav-link-button">Logout</button>

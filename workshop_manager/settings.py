@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'jobs',
     'inventory',
     'bookings',
+    'reports',
 ]
 
 MIDDLEWARE = [
