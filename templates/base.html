@@ -15,10 +15,10 @@
             </div>
             <div class="nav-links">
                 <a href="{% url 'dashboard' %}">Home</a>
-                <a href="{% url 'jobs:job_list' %}">Vehicle Checkins</a>
-                <a href="{% url 'jobs:job_create' %}">Add Vehicle Checkin</a>
-                <a href="{% url 'inventory:radiator_list' %}">Radiator Checkins</a>
-                <a href="{% url 'inventory:radiator_create' %}">Add Radiator Checkin</a>
+                <a href="{% url 'jobs:job_list' %}">Vehicles</a>
+                <a href="{% url 'jobs:job_create' %}">Add Vehicles</a>
+                <a href="{% url 'inventory:radiator_list' %}">Radiators</a>
+                <a href="{% url 'inventory:radiator_create' %}">Add Radiators</a>
                 <form method="post" action="{% url 'logout' %}" style="display: inline; margin: 0;">
                     {% csrf_token %}
                     <button type="submit" class="nav-link-button">Logout</button>
