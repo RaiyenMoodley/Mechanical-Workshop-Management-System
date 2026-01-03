@@ -68,25 +68,26 @@
 
         <div class="dashboard-section">
             <div class="section-header">
-                <h2>Low Stock Alert</h2>
+                <h2>Recent Parts Orders</h2>
                 <a href="{% url 'inventory:radiator_list' %}" class="btn btn-secondary btn-sm">View All</a>
             </div>
-            {% if low_stock_radiators %}
-                <div class="low-stock-list">
-                    {% for radiator in low_stock_radiators %}
-                        <div class="low-stock-item">
-                            <div class="low-stock-header">
-                                <h4>{{ radiator.name }}</h4>
-                                <span class="low-stock-badge">{{ radiator.quantity }} left</span>
+            {% if recent_parts_orders %}
+                <div class="jobs-list">
+                    {% for order in recent_parts_orders %}
+                        <div class="job-card-small">
+                            <div class="job-header">
+                                <h4>{{ order.customer_name }}</h4>
+                                <span class="status-badge {{ order.get_status_color }}">{{ order.status }}</span>
                             </div>
-                            <p class="low-stock-vehicles">{{ radiator.compatible_vehicles|truncatewords:8 }}</p>
-                            <a href="{% url 'inventory:radiator_update' radiator.pk %}" class="btn btn-edit btn-sm">Update Stock</a>
+                            <p>{{ order.get_part_type_display }} - {{ order.name }}</p>
+                            <p class="job-date">{{ order.date_received|date:"M d, Y" }}</p>
+                            <a href="{% url 'inventory:radiator_update' order.pk %}" class="btn btn-view btn-sm">View</a>
                         </div>
                     {% endfor %}
                 </div>
             {% else %}
                 <div class="empty-state">
-                    <p>All items are well stocked! 🎉</p>
+                    <p>No parts orders yet. <a href="{% url 'inventory:radiator_create' %}">Create your first parts order</a></p>
                 </div>
             {% endif %}
         </div>
@@ -96,9 +97,9 @@
         <h2>Quick Actions</h2>
         <div class="action-buttons">
             <a href="{% url 'jobs:job_create' %}" class="btn btn-primary btn-large">➕ Add New Job</a>
-            <a href="{% url 'inventory:radiator_create' %}" class="btn btn-primary btn-large">📦 Add New Stock</a>
+            <a href="{% url 'inventory:radiator_create' %}" class="btn btn-primary btn-large">📦 Add New Parts Order</a>
             <a href="{% url 'jobs:job_list' %}" class="btn btn-secondary btn-large">📋 View All Jobs</a>
-            <a href="{% url 'inventory:radiator_list' %}" class="btn btn-secondary btn-large">📊 View Inventory</a>
+            <a href="{% url 'inventory:radiator_list' %}" class="btn btn-secondary btn-large">📊 View Parts Orders</a>
         </div>
     </div>
 </div>

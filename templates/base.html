@@ -17,8 +17,8 @@
                 <a href="{% url 'dashboard' %}">Home</a>
                 <a href="{% url 'jobs:job_list' %}">Jobs</a>
                 <a href="{% url 'jobs:job_create' %}">Add Job</a>
-                <a href="{% url 'inventory:radiator_list' %}">Inventory</a>
-                <a href="{% url 'inventory:radiator_create' %}">Add Stock</a>
+                <a href="{% url 'inventory:radiator_list' %}">Parts Orders</a>
+                <a href="{% url 'inventory:radiator_create' %}">Add Parts Order</a>
                 <form method="post" action="{% url 'logout' %}" style="display: inline; margin: 0;">
                     {% csrf_token %}
                     <button type="submit" class="nav-link-button">Logout</button>

@@ -4,12 +4,8 @@ from .models import Radiator
 
 @admin.register(Radiator)
 class RadiatorAdmin(admin.ModelAdmin):
-    list_display = ['name', 'quantity', 'cost_price', 'selling_price', 'is_low_stock', 'created_at']
-    list_filter = ['created_at']
-    search_fields = ['name', 'compatible_vehicles']
-    ordering = ['name']
-    
-    def is_low_stock(self, obj):
-        return obj.is_low_stock()
-    is_low_stock.boolean = True
-    is_low_stock.short_description = 'Low Stock'
+    list_display = ['name', 'part_type', 'customer_name', 'contact_number', 'status', 'date_received', 'date_completed']
+    list_filter = ['status', 'part_type', 'date_received']
+    search_fields = ['name', 'customer_name', 'contact_number']
+    date_hierarchy = 'date_received'
+    ordering = ['-created_at']

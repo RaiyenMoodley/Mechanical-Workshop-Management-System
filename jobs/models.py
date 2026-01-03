@@ -1,5 +1,6 @@
 from django.db import models
 from django.urls import reverse
+from django.utils import timezone
 
 
 class Job(models.Model):
@@ -26,12 +27,22 @@ class Job(models.Model):
     work_type = models.CharField(max_length=50, choices=WORK_TYPE_CHOICES)
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='Pending')
     date_received = models.DateField(auto_now_add=True)
+    invoice_number = models.CharField(max_length=100, blank=True, null=True)
+    date_completed = models.DateField(blank=True, null=True)
     notes = models.TextField(blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     
     class Meta:
         ordering = ['-created_at']  # Most recent first
+    
+    def save(self, *args, **kwargs):
+        """Override save to automatically set date_completed when status changes to Completed"""
+        if self.status == 'Completed' and not self.date_completed:
+            self.date_completed = timezone.now().date()
+        elif self.status != 'Completed':
+            self.date_completed = None
+        super().save(*args, **kwargs)
     
     def __str__(self):
         return f"{self.customer_name} - {self.vehicle_registration} ({self.status})"

@@ -1,12 +1,12 @@
 {% extends 'base.html' %}
 
-{% block title %}Radiator Inventory - Workshop Manager{% endblock %}
+{% block title %}Parts Orders - Workshop Manager{% endblock %}
 
 {% block content %}
 <div class="container">
     <div class="page-header">
-        <h1>Radiator Inventory</h1>
-        <a href="{% url 'inventory:radiator_create' %}" class="btn btn-primary">Add New Radiator</a>
+        <h1>Parts Orders</h1>
+        <a href="{% url 'inventory:radiator_create' %}" class="btn btn-primary">Add New Parts Order</a>
     </div>
 
     {% if radiators %}
@@ -14,28 +14,34 @@
             <table class="data-table">
                 <thead>
                     <tr>
-                        <th>Name/Model</th>
-                        <th>Compatible Vehicles</th>
-                        <th>Quantity</th>
-                        <th>Cost Price</th>
-                        <th>Selling Price</th>
-                        <th>Profit Margin</th>
+                        <th>Part Name/Model</th>
+                        <th>Part Type</th>
+                        <th>Customer Name</th>
+                        <th>Contact Number</th>
+                        <th>Status</th>
+                        <th>Date Received</th>
+                        <th>Date Completed</th>
                         <th>Actions</th>
                     </tr>
                 </thead>
                 <tbody>
                     {% for radiator in radiators %}
-                        <tr class="{% if radiator.is_low_stock %}low-stock{% endif %}">
+                        <tr>
                             <td><strong>{{ radiator.name }}</strong></td>
-                            <td>{{ radiator.compatible_vehicles|truncatewords:10 }}</td>
+                            <td>{{ radiator.get_part_type_display }}</td>
+                            <td>{{ radiator.customer_name }}</td>
+                            <td>{{ radiator.contact_number }}</td>
                             <td>
-                                <span class="{% if radiator.is_low_stock %}low-stock-badge{% endif %}">
-                                    {{ radiator.quantity }}
-                                </span>
+                                <span class="status-badge {{ radiator.get_status_color }}">{{ radiator.status }}</span>
                             </td>
-                            <td>R{{ radiator.cost_price }}</td>
-                            <td>R{{ radiator.selling_price }}</td>
-                            <td>R{{ radiator.get_profit_margin }}</td>
+                            <td>{{ radiator.date_received|date:"M d, Y" }}</td>
+                            <td>
+                                {% if radiator.date_completed %}
+                                    {{ radiator.date_completed|date:"M d, Y" }}
+                                {% else %}
+                                    -
+                                {% endif %}
+                            </td>
                             <td class="actions">
                                 <a href="{% url 'inventory:radiator_update' radiator.pk %}" class="btn btn-edit btn-sm">Edit</a>
                                 <a href="{% url 'inventory:radiator_delete' radiator.pk %}" class="btn btn-danger btn-sm">Delete</a>
@@ -45,15 +51,10 @@
                 </tbody>
             </table>
         </div>
-        
-        <div class="info-box">
-            <p><strong>Note:</strong> Items highlighted in red have low stock (quantity &lt; 5)</p>
-        </div>
     {% else %}
         <div class="empty-state">
-            <p>No radiators in inventory. <a href="{% url 'inventory:radiator_create' %}">Add your first radiator</a></p>
+            <p>No parts orders found. <a href="{% url 'inventory:radiator_create' %}">Create your first parts order</a></p>
         </div>
     {% endif %}
 </div>
 {% endblock %}
-

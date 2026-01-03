@@ -7,47 +7,47 @@ from .forms import RadiatorForm
 
 @login_required
 def radiator_list(request):
-    """List all radiators"""
+    """List all parts orders"""
     radiators = Radiator.objects.all()
     return render(request, 'inventory/radiator_list.html', {'radiators': radiators})
 
 
 @login_required
 def radiator_create(request):
-    """Create a new radiator"""
+    """Create a new parts order"""
     if request.method == 'POST':
         form = RadiatorForm(request.POST)
         if form.is_valid():
             radiator = form.save()
-            messages.success(request, f'{radiator.name} has been added to inventory successfully!')
+            messages.success(request, f'Parts order for {radiator.customer_name} has been created successfully!')
             return redirect('inventory:radiator_list')
     else:
         form = RadiatorForm()
-    return render(request, 'inventory/radiator_form.html', {'form': form, 'title': 'Add New Radiator'})
+    return render(request, 'inventory/radiator_form.html', {'form': form, 'title': 'Add New Parts Order'})
 
 
 @login_required
 def radiator_update(request, pk):
-    """Update an existing radiator"""
+    """Update an existing parts order"""
     radiator = get_object_or_404(Radiator, pk=pk)
     if request.method == 'POST':
         form = RadiatorForm(request.POST, instance=radiator)
         if form.is_valid():
             radiator = form.save()
-            messages.success(request, f'{radiator.name} has been updated successfully!')
+            messages.success(request, f'Parts order for {radiator.customer_name} has been updated successfully!')
             return redirect('inventory:radiator_list')
     else:
         form = RadiatorForm(instance=radiator)
-    return render(request, 'inventory/radiator_form.html', {'form': form, 'radiator': radiator, 'title': 'Edit Radiator'})
+    return render(request, 'inventory/radiator_form.html', {'form': form, 'radiator': radiator, 'title': 'Edit Parts Order'})
 
 
 @login_required
 def radiator_delete(request, pk):
-    """Delete a radiator"""
+    """Delete a parts order"""
     radiator = get_object_or_404(Radiator, pk=pk)
     if request.method == 'POST':
-        radiator_name = radiator.name
+        customer_name = radiator.customer_name
         radiator.delete()
-        messages.success(request, f'{radiator_name} has been deleted from inventory successfully!')
+        messages.success(request, f'Parts order for {customer_name} has been deleted successfully!')
         return redirect('inventory:radiator_list')
     return render(request, 'inventory/radiator_confirm_delete.html', {'radiator': radiator})

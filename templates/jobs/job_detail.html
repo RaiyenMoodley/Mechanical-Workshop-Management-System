@@ -65,6 +65,18 @@
                     <label>Date Received:</label>
                     <span>{{ job.date_received|date:"F d, Y" }}</span>
                 </div>
+                {% if job.date_completed %}
+                <div class="detail-item">
+                    <label>Date Completed:</label>
+                    <span>{{ job.date_completed|date:"F d, Y" }}</span>
+                </div>
+                {% endif %}
+                {% if job.invoice_number %}
+                <div class="detail-item">
+                    <label>Invoice Number:</label>
+                    <span>{{ job.invoice_number }}</span>
+                </div>
+                {% endif %}
             </div>
         </div>
 

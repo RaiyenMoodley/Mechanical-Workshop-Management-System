@@ -15,6 +15,7 @@ class JobForm(forms.ModelForm):
             'vehicle_model',
             'work_type',
             'status',
+            'invoice_number',
             'notes',
         ]
         widgets = {
@@ -43,6 +44,10 @@ class JobForm(forms.ModelForm):
             }),
             'status': forms.Select(attrs={
                 'class': 'form-control'
+            }),
+            'invoice_number': forms.TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'Enter invoice number (optional)'
             }),
             'notes': forms.Textarea(attrs={
                 'class': 'form-control',

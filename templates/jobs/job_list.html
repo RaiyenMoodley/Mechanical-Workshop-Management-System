@@ -22,6 +22,12 @@
                         <p><strong>Work Type:</strong> {{ job.get_work_type_display }}</p>
                         <p><strong>Contact:</strong> {{ job.contact_number }}</p>
                         <p><strong>Date Received:</strong> {{ job.date_received|date:"M d, Y" }}</p>
+                        {% if job.date_completed %}
+                            <p><strong>Date Completed:</strong> {{ job.date_completed|date:"M d, Y" }}</p>
+                        {% endif %}
+                        {% if job.invoice_number %}
+                            <p><strong>Invoice #:</strong> {{ job.invoice_number }}</p>
+                        {% endif %}
                     </div>
                     <div class="job-actions">
                         <a href="{% url 'jobs:job_detail' job.pk %}" class="btn btn-view">View</a>

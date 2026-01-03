@@ -12,7 +12,7 @@ def dashboard(request):
     in_progress_jobs = Job.objects.filter(status='In Progress').count()
     completed_jobs = Job.objects.filter(status='Completed').count()
     recent_jobs = Job.objects.all()[:5]
-    low_stock_radiators = [r for r in Radiator.objects.all() if r.is_low_stock()]
+    recent_parts_orders = Radiator.objects.all()[:5]
     
     context = {
         'total_jobs': total_jobs,
@@ -20,7 +20,7 @@ def dashboard(request):
         'in_progress_jobs': in_progress_jobs,
         'completed_jobs': completed_jobs,
         'recent_jobs': recent_jobs,
-        'low_stock_radiators': low_stock_radiators,
+        'recent_parts_orders': recent_parts_orders,
     }
     return render(request, 'dashboard.html', context)
 
