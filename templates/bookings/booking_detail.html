@@ -88,10 +88,10 @@
 
         {% if booking.linked_job %}
         <div class="detail-section">
-            <h2>Linked Job</h2>
+            <h2>Linked Vehicle Checkin</h2>
             <p>
                 <a href="{% url 'jobs:job_detail' booking.linked_job.pk %}" class="btn btn-view btn-sm">
-                    View Job: {{ booking.linked_job.vehicle_registration }}
+                    View Vehicle Checkin: {{ booking.linked_job.vehicle_registration }}
                 </a>
             </p>
         </div>

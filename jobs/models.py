@@ -1,6 +1,7 @@
 from django.db import models
 from django.urls import reverse
 from django.utils import timezone
+from datetime import date
 
 
 class Job(models.Model):
@@ -26,7 +27,7 @@ class Job(models.Model):
     vehicle_model = models.CharField(max_length=100)
     work_type = models.CharField(max_length=50, choices=WORK_TYPE_CHOICES)
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='Pending')
-    date_received = models.DateField(auto_now_add=True)
+    date_received = models.DateField(default=date.today)
     invoice_number = models.CharField(max_length=100, blank=True, null=True)
     date_completed = models.DateField(blank=True, null=True)
     notes = models.TextField(blank=True)

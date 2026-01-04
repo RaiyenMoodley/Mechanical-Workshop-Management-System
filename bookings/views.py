@@ -142,6 +142,7 @@ def booking_create(request):
                     vehicle_model=booking.vehicle_model,
                     work_type=booking.work_type,
                     status='Pending',
+                    date_received=booking.booking_date,  # Set date_received to booking date
                     notes=booking.notes,
                 )
                 booking.linked_job = job
