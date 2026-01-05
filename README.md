@@ -13,7 +13,7 @@ A production-ready Django web application for a mechanic workshop owner to track
 ## Tech Stack
 
 - **Backend**: Django 5.2.5 (Python)
-- **Database**: SQLite (Django default)
+- **Database**: Supabase PostgreSQL (configurable via DATABASE_URL, falls back to SQLite for local development)
 - **Frontend**: HTML & CSS (no frameworks)
 - **Authentication**: Django's built-in authentication system
 
@@ -79,14 +79,23 @@ source venv/bin/activate
 pip install -r requirements.txt
 ```
 
-### Step 4: Run Migrations
+### Step 4: Configure Database (Optional - Supabase PostgreSQL)
+
+By default, the application uses SQLite for local development. To use Supabase PostgreSQL:
+
+1. Follow the detailed guide in [SUPABASE_SETUP.md](SUPABASE_SETUP.md)
+2. Or simply set the `DATABASE_URL` environment variable in a `.env` file
+
+If you skip this step, the app will use SQLite automatically.
+
+### Step 5: Run Migrations
 
 ```bash
 python manage.py makemigrations
 python manage.py migrate
 ```
 
-### Step 5: Create Superuser
+### Step 6: Create Superuser
 
 ```bash
 python manage.py createsuperuser
@@ -94,7 +103,7 @@ python manage.py createsuperuser
 
 Follow the prompts to create an admin user. You'll need this to log in to the application.
 
-### Step 6: Run Development Server
+### Step 7: Run Development Server
 
 ```bash
 python manage.py runserver
@@ -102,7 +111,7 @@ python manage.py runserver
 
 The application will be available at `http://127.0.0.1:8000/`
 
-### Step 7: Access the Application
+### Step 8: Access the Application
 
 1. Open your browser and navigate to `http://127.0.0.1:8000/`
 2. You'll be redirected to the login page
@@ -184,12 +193,14 @@ python manage.py migrate
 
 For production deployment:
 
-1. Set `DEBUG = False` in `settings.py`
-2. Set `ALLOWED_HOSTS` in `settings.py`
-3. Configure a production database (PostgreSQL recommended)
-4. Set up static file serving (e.g., using WhiteNoise or a web server)
-5. Set up proper secret key management
-6. Use environment variables for sensitive settings
+1. Set `DEBUG = False` in your `.env` file or environment variables
+2. Set `ALLOWED_HOSTS` in your `.env` file (comma-separated list of domains)
+3. Configure Supabase PostgreSQL database (see [SUPABASE_SETUP.md](SUPABASE_SETUP.md))
+4. Set `DATABASE_URL` environment variable with your Supabase connection string
+5. Set up static file serving (WhiteNoise is already configured)
+6. Use environment variables for all sensitive settings (SECRET_KEY, DATABASE_URL, etc.)
+
+The application is already configured to use environment variables via `python-decouple` and `dj-database-url`.
 
 ## License
 
