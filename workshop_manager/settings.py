@@ -83,8 +83,14 @@ WSGI_APPLICATION = 'workshop_manager.wsgi.application'
 # Use DATABASE_URL if available (Railway/Heroku style), otherwise use SQLite for local development
 DATABASE_URL = config('DATABASE_URL', default=None)
 if DATABASE_URL:
+    db_config = dj_database_url.parse(DATABASE_URL, conn_max_age=600)
+    # Add SSL requirement for Supabase PostgreSQL connections
+    if db_config.get('ENGINE') == 'django.db.backends.postgresql':
+        db_config['OPTIONS'] = {
+            'sslmode': 'require',
+        }
     DATABASES = {
-        'default': dj_database_url.parse(DATABASE_URL, conn_max_age=600)
+        'default': db_config
     }
 else:
     DATABASES = {
