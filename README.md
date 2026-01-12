@@ -1,66 +1,158 @@
 # Workshop Management System
 
-A production-ready Django web application for a mechanic workshop owner to track workshop jobs (cars coming in) and manage radiator inventory with minimal clicks and no unnecessary complexity.
+A comprehensive, production-ready Django web application designed for automotive workshop owners to efficiently manage workshop operations, track customer jobs, manage inventory, and handle bookings. Built with simplicity and usability in mind, this system streamlines daily workshop operations with minimal complexity.
 
-## Features
+## 📋 Table of Contents
 
-- **Secure Authentication**: Login required for all pages except login page
-- **Workshop Job Tracking**: Add, view, edit, and delete workshop jobs with customer and vehicle information
-- **Radiator Inventory Management**: Track radiator stock with automatic low stock alerts (quantity < 5)
-- **Dashboard**: Quick overview of jobs statistics and low stock items
-- **Clean UI**: Simple, vibrant design with color-coded statuses and easy navigation
+- [Features](#-features)
+- [Tech Stack](#-tech-stack)
+- [Architecture](#-architecture)
+- [Installation](#-installation)
+- [Configuration](#-configuration)
+- [Usage Guide](#-usage-guide)
+- [Development](#-development)
+- [Deployment](#-deployment)
+- [Project Structure](#-project-structure)
+- [API Documentation](#-api-documentation)
+- [Troubleshooting](#-troubleshooting)
+- [Contributing](#-contributing)
+- [License](#-license)
 
-## Tech Stack
+## ✨ Features
 
-- **Backend**: Django 5.2.5 (Python)
-- **Database**: Supabase PostgreSQL (configurable via DATABASE_URL, falls back to SQLite for local development)
-- **Frontend**: HTML & CSS (no frameworks)
-- **Authentication**: Django's built-in authentication system
+### Core Functionality
 
-## Project Structure
+- **🔐 Secure Authentication System**
+  - Django's built-in authentication with session management
+  - Login required for all pages (except login page)
+  - Secure password validation and user management
 
-```
-workshop_manager/
-├── manage.py
-├── workshop_manager/
-│   ├── settings.py
-│   ├── urls.py
-│   └── views.py
-├── jobs/                    # Workshop job tracking app
-│   ├── models.py
-│   ├── views.py
-│   ├── forms.py
-│   └── urls.py
-├── inventory/              # Radiator inventory app
-│   ├── models.py
-│   ├── views.py
-│   ├── forms.py
-│   └── urls.py
-├── templates/              # HTML templates
-│   ├── base.html
-│   ├── dashboard.html
-│   ├── registration/
-│   ├── jobs/
-│   └── inventory/
-└── static/
-    └── css/
-        └── style.css
-```
+- **📊 Comprehensive Dashboard**
+  - Real-time job statistics (Total, Pending, In Progress, Completed)
+  - Low stock alerts for inventory items
+  - Recent jobs overview
+  - Quick action buttons for common tasks
 
-## Installation & Setup
+- **🔧 Workshop Job Management**
+  - Complete job lifecycle tracking (Pending → In Progress → Completed)
+  - Customer and vehicle information management
+  - Multiple work types (Repair, Service, Radiator Replacement, Other)
+  - Automatic date tracking (received, completed)
+  - Invoice number tracking
+  - Notes and additional information fields
+  - Color-coded status indicators for quick visual reference
+
+- **📦 Inventory Management**
+  - Track multiple part types (Radiators, Oil Coolers, Intercoolers, Fuel Tanks, Others)
+  - Customer and order information tracking
+  - Status management (Pending, In Progress, Completed)
+  - Invoice number tracking
+  - Automatic low stock alerts (quantity < 5)
+  - Date received and completion tracking
+
+- **📅 Booking System**
+  - Vehicle and radiator booking management
+  - Calendar-based booking interface
+  - All-day and hourly booking options
+  - Customer contact information
+  - Booking status tracking (Pending, Confirmed, Completed, Cancelled)
+
+- **📈 Reporting System**
+  - Generate reports for jobs and inventory
+  - Export capabilities for data analysis
+
+### User Experience
+
+- **🎨 Clean, Modern UI**
+  - Intuitive navigation
+  - Color-coded status indicators
+  - Responsive design
+  - Minimal clicks for common operations
+
+- **⚡ Performance Optimized**
+  - Efficient database queries
+  - Static file optimization with WhiteNoise
+  - Connection pooling for PostgreSQL
+
+## 🛠 Tech Stack
+
+### Backend
+- **Framework**: Django 5.2.5
+- **Language**: Python 3.11.9
+- **Database**: 
+  - Production: Supabase PostgreSQL (with SSL support)
+  - Development: SQLite (default, fallback)
+- **WSGI Server**: Gunicorn 21.2.0
+- **Static Files**: WhiteNoise 6.6.0
+
+### Frontend
+- **Templates**: Django Template Engine
+- **Styling**: Custom CSS (no frameworks)
+- **JavaScript**: Vanilla JavaScript (minimal)
+
+### Database & Infrastructure
+- **ORM**: Django ORM
+- **Database Adapter**: psycopg2-binary 2.9.9
+- **Connection Management**: dj-database-url 2.1.0
+- **Environment Variables**: python-decouple 3.8
+
+### Additional Tools
+- **Excel Support**: openpyxl 3.1.2 (for reports)
+- **Deployment**: Render, Railway, Heroku compatible
+
+## 🏗 Architecture
+
+### Application Structure
+
+The application follows Django's app-based architecture with clear separation of concerns:
+
+- **`workshop_manager/`**: Main project configuration
+- **`jobs/`**: Workshop job tracking application
+- **`inventory/`**: Parts inventory management application
+- **`bookings/`**: Booking and scheduling application
+- **`reports/`**: Reporting and analytics application
+
+### Database Architecture
+
+- **PostgreSQL** for production (Supabase)
+- **SQLite** for local development
+- Automatic SSL configuration for Supabase connections
+- Connection pooling support
+
+### Security Features
+
+- CSRF protection enabled
+- XSS protection
+- Secure session management
+- Password validation
+- Environment-based configuration
+- SSL/TLS for database connections
+
+## 📥 Installation
 
 ### Prerequisites
 
-- Python 3.8 or higher
-- pip (Python package manager)
+- **Python**: 3.8 or higher (3.11.9 recommended)
+- **pip**: Python package manager
+- **Git**: Version control (optional)
+- **PostgreSQL**: For production (via Supabase or self-hosted)
 
-### Step 1: Clone or Navigate to Project Directory
+### Step-by-Step Installation
+
+#### 1. Clone the Repository
+
+```bash
+git clone <repository-url>
+cd Stock-Management-System
+```
+
+Or navigate to the project directory if you already have it:
 
 ```bash
 cd Stock-Management-System
 ```
 
-### Step 2: Create Virtual Environment (Recommended)
+#### 2. Create Virtual Environment
 
 ```bash
 # Create virtual environment
@@ -69,41 +161,72 @@ python3 -m venv venv
 # Activate virtual environment
 # On macOS/Linux:
 source venv/bin/activate
+
 # On Windows:
-# venv\Scripts\activate
+venv\Scripts\activate
 ```
 
-### Step 3: Install Dependencies
+#### 3. Install Dependencies
 
 ```bash
 pip install -r requirements.txt
 ```
 
-### Step 4: Configure Database (Optional - Supabase PostgreSQL)
+This will install:
+- Django 5.2.5
+- psycopg2-binary 2.9.9
+- python-decouple 3.8
+- dj-database-url 2.1.0
+- gunicorn 21.2.0
+- whitenoise 6.6.0
+- openpyxl 3.1.2
 
-By default, the application uses SQLite for local development. To use Supabase PostgreSQL:
+#### 4. Configure Environment Variables
 
-1. Follow the detailed guide in [SUPABASE_SETUP.md](SUPABASE_SETUP.md)
-2. Or simply set the `DATABASE_URL` environment variable in a `.env` file
+Create a `.env` file in the project root:
 
-If you skip this step, the app will use SQLite automatically.
+```bash
+cp env.example .env
+```
 
-### Step 5: Run Migrations
+Edit `.env` with your configuration:
+
+```env
+# Django Settings
+SECRET_KEY=your-secret-key-here
+DEBUG=True
+ALLOWED_HOSTS=localhost,127.0.0.1
+
+# Database Configuration (Optional - uses SQLite if not set)
+DATABASE_URL=postgresql://postgres:password@db.project.supabase.co:5432/postgres?sslmode=require
+```
+
+**Note**: If `DATABASE_URL` is not set, the application will automatically use SQLite for local development.
+
+#### 5. Run Database Migrations
 
 ```bash
 python manage.py makemigrations
 python manage.py migrate
 ```
 
-### Step 6: Create Superuser
+This creates all necessary database tables.
+
+#### 6. Create Superuser Account
 
 ```bash
 python manage.py createsuperuser
 ```
 
-Follow the prompts to create an admin user. You'll need this to log in to the application.
+Follow the prompts to create an admin account. You'll need this to log into the application.
 
-### Step 7: Run Development Server
+#### 7. Collect Static Files (Production)
+
+```bash
+python manage.py collectstatic --noinput
+```
+
+#### 8. Start Development Server
 
 ```bash
 python manage.py runserver
@@ -111,64 +234,143 @@ python manage.py runserver
 
 The application will be available at `http://127.0.0.1:8000/`
 
-### Step 8: Access the Application
+## ⚙️ Configuration
 
-1. Open your browser and navigate to `http://127.0.0.1:8000/`
+### Database Configuration
+
+#### Using Supabase PostgreSQL (Recommended for Production)
+
+1. **Create a Supabase Project**
+   - Go to [supabase.com](https://supabase.com)
+   - Create a new project
+   - Note your database password
+
+2. **Get Connection String**
+   - Navigate to Settings → Database
+   - Copy the connection string from the "URI" tab
+   - Add `?sslmode=require` at the end
+
+3. **Set Environment Variable**
+   ```env
+   DATABASE_URL=postgresql://postgres:YOUR-PASSWORD@db.PROJECT-REF.supabase.co:5432/postgres?sslmode=require
+   ```
+
+4. **Run Migrations**
+   ```bash
+   python manage.py migrate
+   ```
+
+#### Using SQLite (Default for Development)
+
+If `DATABASE_URL` is not set, the application automatically uses SQLite. No additional configuration needed.
+
+### Environment Variables
+
+| Variable | Description | Default | Required |
+|----------|-------------|---------|----------|
+| `SECRET_KEY` | Django secret key | (generated) | Yes |
+| `DEBUG` | Debug mode | `True` | No |
+| `ALLOWED_HOSTS` | Allowed hostnames | `localhost,127.0.0.1` | Yes (production) |
+| `DATABASE_URL` | Database connection string | None (uses SQLite) | No |
+
+### Static Files Configuration
+
+Static files are automatically handled by WhiteNoise in production. No additional configuration needed.
+
+## 📖 Usage Guide
+
+### Accessing the Application
+
+1. Navigate to `http://127.0.0.1:8000/` (development) or your production URL
 2. You'll be redirected to the login page
-3. Log in with the superuser credentials you created
+3. Log in with your superuser credentials
 
-## Usage
+### Managing Workshop Jobs
 
-### Workshop Jobs
+#### Viewing Jobs
+- Click **"Jobs"** in the navigation bar
+- View all jobs with their current status
+- Jobs are sorted by most recent first
 
-- **View All Jobs**: Click "Jobs" in the navigation bar
-- **Add New Job**: Click "Add Job" in the navigation bar or from the jobs list page
-- **View Job Details**: Click "View" on any job card
-- **Edit Job**: Click "Edit" on any job card or from the job detail page
-- **Delete Job**: Click "Delete" from the job detail page
+#### Creating a New Job
+1. Click **"Add Job"** in the navigation bar or from the jobs list
+2. Fill in the required information:
+   - Customer name
+   - Contact number
+   - Vehicle registration
+   - Vehicle make and model
+   - Work type
+   - Status (defaults to "Pending")
+   - Notes (optional)
+3. Click **"Save"**
 
-**Job Fields:**
-- Customer name
-- Contact number
-- Vehicle registration number
-- Vehicle make & model
-- Work type (Repair, Service, Radiator Replacement, Other)
-- Status (Pending, In Progress, Completed)
-- Date received (automatically set)
-- Notes (optional)
+#### Job Status Management
+- **Pending** (🔴 Red): Job is waiting to be started
+- **In Progress** (🟠 Orange): Work is currently being performed
+- **Completed** (🟢 Green): Job is finished
 
-**Status Colors:**
-- 🔴 Red: Pending
-- 🟠 Orange: In Progress
-- 🟢 Green: Completed
+Status automatically updates the completion date when changed to "Completed".
 
-### Radiator Inventory
+#### Editing and Deleting Jobs
+- Click **"Edit"** on any job card to modify details
+- Click **"Delete"** from the job detail page to remove a job
+- Confirmation required before deletion
 
-- **View Inventory**: Click "Inventory" in the navigation bar
-- **Add New Radiator**: Click "Add Stock" in the navigation bar or from the inventory list page
-- **Edit Radiator**: Click "Edit" on any radiator in the table
-- **Delete Radiator**: Click "Delete" on any radiator in the table
+### Managing Inventory
 
-**Radiator Fields:**
-- Name/Model
-- Compatible vehicles
-- Quantity in stock
-- Cost price
-- Selling price
+#### Viewing Inventory
+- Click **"Inventory"** in the navigation bar
+- View all parts with their current stock status
+- Low stock items (quantity < 5) are highlighted in red
 
-**Low Stock Alert:**
-- Items with quantity < 5 are automatically highlighted in red
+#### Adding New Inventory Items
+1. Click **"Add Stock"** in the navigation bar
+2. Fill in the part information:
+   - Name/Model
+   - Part type (Radiator, Oil Cooler, Intercooler, Fuel Tank, Other)
+   - Customer name (optional)
+   - Contact number (optional)
+   - Invoice number (optional)
+   - Status
+   - Notes (optional)
+3. Click **"Save"**
+
+#### Low Stock Alerts
+- Items with quantity less than 5 are automatically highlighted
 - Low stock items appear on the dashboard
+- Helps prevent stockouts
 
-### Dashboard
+### Managing Bookings
+
+#### Viewing Bookings
+- Click **"Bookings"** in the navigation bar
+- View calendar-based booking interface
+- Filter by booking type (Vehicle or Radiator)
+
+#### Creating a Booking
+1. Click **"Add Booking"** or select a date on the calendar
+2. Choose booking type (Vehicle or Radiator)
+3. Fill in customer and booking details
+4. Select date and time (or mark as all-day)
+5. Save the booking
+
+### Dashboard Overview
 
 The dashboard provides:
-- Quick statistics (Total Jobs, Pending, In Progress, Completed)
-- Recent jobs list
-- Low stock alerts
-- Quick action buttons
+- **Quick Statistics**: Total jobs, pending, in progress, completed
+- **Recent Jobs**: Latest job entries
+- **Low Stock Alerts**: Items needing restocking
+- **Quick Actions**: Direct links to common tasks
 
-## Development
+### Django Admin Panel
+
+Access the admin panel at `/admin/`:
+- Manage all models directly
+- Bulk operations
+- Advanced filtering and search
+- User management
+
+## 🔧 Development
 
 ### Running Tests
 
@@ -176,36 +378,277 @@ The dashboard provides:
 python manage.py test
 ```
 
-### Accessing Admin Panel
+### Making Model Changes
 
-Django admin panel is available at `http://127.0.0.1:8000/admin/`
-
-### Making Changes to Models
-
-After modifying models in `jobs/models.py` or `inventory/models.py`:
+After modifying models in any app:
 
 ```bash
+# Create migration files
 python manage.py makemigrations
+
+# Apply migrations
 python manage.py migrate
 ```
 
-## Production Deployment
+### Development Server Options
 
-For production deployment:
+```bash
+# Run on default port (8000)
+python manage.py runserver
 
-1. Set `DEBUG = False` in your `.env` file or environment variables
-2. Set `ALLOWED_HOSTS` in your `.env` file (comma-separated list of domains)
-3. Configure Supabase PostgreSQL database (see [SUPABASE_SETUP.md](SUPABASE_SETUP.md))
-4. Set `DATABASE_URL` environment variable with your Supabase connection string
-5. Set up static file serving (WhiteNoise is already configured)
-6. Use environment variables for all sensitive settings (SECRET_KEY, DATABASE_URL, etc.)
+# Run on custom port
+python manage.py runserver 8080
 
-The application is already configured to use environment variables via `python-decouple` and `dj-database-url`.
+# Run on all interfaces
+python manage.py runserver 0.0.0.0:8000
+```
 
-## License
+### Code Style
 
-This project is created for workshop management purposes.
+- Follow PEP 8 Python style guide
+- Use Django's coding style conventions
+- Keep functions and classes focused and small
 
-## Support
+### Debugging
 
-For issues or questions, please refer to the Django documentation: https://docs.djangoproject.com/
+- Set `DEBUG=True` in `.env` for detailed error pages
+- Check Django logs in the console
+- Use Django's debug toolbar (if installed)
+
+## 🚀 Deployment
+
+### Deployment Checklist
+
+- [ ] Set `DEBUG=False` in production
+- [ ] Set `ALLOWED_HOSTS` with your domain
+- [ ] Generate a new `SECRET_KEY` for production
+- [ ] Configure `DATABASE_URL` with production database
+- [ ] Run `collectstatic` to gather static files
+- [ ] Set up proper logging
+- [ ] Configure SSL/TLS certificates
+- [ ] Set up backup strategy
+
+### Deploying to Render
+
+1. **Set Environment Variables** in Render dashboard:
+   ```
+   SECRET_KEY=your-production-secret-key
+   DEBUG=False
+   ALLOWED_HOSTS=your-app.onrender.com
+   PYTHON_VERSION=3.11.9
+   DATABASE_URL=postgresql://postgres:password@db.project.supabase.co:5432/postgres?sslmode=require
+   ```
+
+2. **Configure Build Command**:
+   ```bash
+   pip install -r requirements.txt && python manage.py collectstatic --noinput
+   ```
+
+3. **Configure Start Command**:
+   ```bash
+   gunicorn workshop_manager.wsgi:application
+   ```
+
+4. **Run Migrations** after deployment:
+   ```bash
+   python manage.py migrate
+   python manage.py createsuperuser
+   ```
+
+### Deploying to Other Platforms
+
+The application is compatible with:
+- **Railway**: Uses `Procfile` automatically
+- **Heroku**: Uses `Procfile` automatically
+- **DigitalOcean App Platform**: Configure via dashboard
+- **AWS Elastic Beanstalk**: Requires `Procfile`
+- **Self-hosted**: Use Gunicorn with Nginx
+
+### Production Settings
+
+Ensure these are set in production:
+
+```env
+DEBUG=False
+ALLOWED_HOSTS=yourdomain.com,www.yourdomain.com
+SECRET_KEY=<strong-random-key>
+DATABASE_URL=<production-database-url>
+```
+
+## 📁 Project Structure
+
+```
+Stock-Management-System/
+├── manage.py                 # Django management script
+├── requirements.txt          # Python dependencies
+├── runtime.txt               # Python version specification
+├── Procfile                  # Process file for deployment
+├── .env                      # Environment variables (not in git)
+├── .gitignore               # Git ignore rules
+│
+├── workshop_manager/        # Main project configuration
+│   ├── __init__.py
+│   ├── settings.py          # Django settings
+│   ├── urls.py              # Root URL configuration
+│   ├── views.py             # Root views
+│   ├── wsgi.py              # WSGI configuration
+│   └── asgi.py              # ASGI configuration
+│
+├── jobs/                    # Workshop job tracking app
+│   ├── models.py            # Job model definitions
+│   ├── views.py             # Job views and logic
+│   ├── forms.py             # Job forms
+│   ├── urls.py              # Job URL routing
+│   ├── admin.py             # Admin configuration
+│   └── migrations/          # Database migrations
+│
+├── inventory/               # Inventory management app
+│   ├── models.py            # Inventory model definitions
+│   ├── views.py             # Inventory views
+│   ├── forms.py             # Inventory forms
+│   ├── urls.py              # Inventory URL routing
+│   ├── admin.py             # Admin configuration
+│   └── migrations/          # Database migrations
+│
+├── bookings/                # Booking management app
+│   ├── models.py            # Booking model definitions
+│   ├── views.py             # Booking views
+│   ├── forms.py             # Booking forms
+│   ├── urls.py              # Booking URL routing
+│   ├── admin.py             # Admin configuration
+│   └── migrations/          # Database migrations
+│
+├── reports/                 # Reporting app
+│   ├── models.py
+│   ├── views.py
+│   ├── urls.py
+│   └── admin.py
+│
+├── templates/               # HTML templates
+│   ├── base.html            # Base template
+│   ├── dashboard.html       # Dashboard template
+│   ├── jobs/                # Job templates
+│   ├── inventory/           # Inventory templates
+│   ├── bookings/            # Booking templates
+│   ├── reports/             # Report templates
+│   └── registration/        # Auth templates
+│
+└── static/                  # Static files
+    └── css/
+        └── style.css        # Custom styles
+```
+
+## 🔌 API Documentation
+
+The application primarily uses server-side rendering. For API access, use Django's admin panel or extend with Django REST Framework if needed.
+
+### URL Patterns
+
+- `/` - Dashboard
+- `/login/` - Login page
+- `/logout/` - Logout
+- `/jobs/` - Job list
+- `/jobs/<id>/` - Job detail
+- `/inventory/` - Inventory list
+- `/bookings/` - Booking calendar
+- `/reports/` - Reports page
+- `/admin/` - Django admin panel
+
+## 🐛 Troubleshooting
+
+### Common Issues
+
+#### Database Connection Errors
+
+**Problem**: Cannot connect to Supabase PostgreSQL
+
+**Solutions**:
+1. Verify `DATABASE_URL` is set correctly in `.env`
+2. Check Supabase project is active (not paused)
+3. Ensure connection string includes `?sslmode=require`
+4. Verify password is correct and URL-encoded if needed
+
+#### Migration Errors
+
+**Problem**: Migrations fail to run
+
+**Solutions**:
+1. Ensure database is accessible
+2. Check for conflicting migrations: `python manage.py showmigrations`
+3. Try: `python manage.py migrate --run-syncdb`
+
+#### Static Files Not Loading
+
+**Problem**: CSS/styles not appearing
+
+**Solutions**:
+1. Run `python manage.py collectstatic`
+2. Check `STATIC_ROOT` and `STATIC_URL` in settings
+3. Verify WhiteNoise is configured (already done)
+
+#### psycopg2 Installation Issues
+
+**Problem**: `Error loading psycopg2 module`
+
+**Solutions**:
+1. Ensure Python version is 3.11.9 (set `PYTHON_VERSION=3.11.9` in deployment)
+2. Install system dependencies: `apt-get install libpq-dev` (Linux)
+3. Use `psycopg2-binary` (already in requirements.txt)
+
+#### Permission Errors
+
+**Problem**: Permission denied errors
+
+**Solutions**:
+1. Check file permissions
+2. Ensure virtual environment is activated
+3. Verify user has write permissions in project directory
+
+### Getting Help
+
+- Check Django documentation: https://docs.djangoproject.com/
+- Review error logs in console or deployment platform
+- Check Supabase dashboard for database issues
+- Verify environment variables are set correctly
+
+## 🤝 Contributing
+
+Contributions are welcome! Please follow these guidelines:
+
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
+3. Make your changes
+4. Test thoroughly
+5. Commit your changes (`git commit -m 'Add amazing feature'`)
+6. Push to the branch (`git push origin feature/amazing-feature`)
+7. Open a Pull Request
+
+### Development Guidelines
+
+- Follow PEP 8 style guide
+- Write clear commit messages
+- Add tests for new features
+- Update documentation as needed
+- Keep code simple and maintainable
+
+## 📄 License
+
+This project is created for workshop management purposes. All rights reserved.
+
+## 👤 Support
+
+For issues, questions, or contributions:
+
+- **Documentation**: See Django documentation at https://docs.djangoproject.com/
+- **Issues**: Open an issue in the repository
+- **Questions**: Contact the project maintainer
+
+## 🙏 Acknowledgments
+
+- Built with [Django](https://www.djangoproject.com/)
+- Database powered by [Supabase](https://supabase.com/)
+- Deployed on [Render](https://render.com/)
+
+---
+
+**Made with ❤️ for workshop management**
