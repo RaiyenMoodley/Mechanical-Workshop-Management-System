@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+
+{% block title %}Employee Absence Details - Absentee Manager{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="page-header">
+        <h1>{{ employee.name }} - Absence Statistics</h1>
+        <div class="header-actions">
+            <a href="{% url 'absentees:absence_calendar' %}" class="btn btn-secondary">Back to Calendar</a>
+            <a href="{% url 'absentees:employee_list' %}" class="btn btn-secondary">Back to Employees</a>
+        </div>
+    </div>
+
+    <div class="detail-card">
+        <div class="detail-section">
+            <h3>Summary</h3>
+            <p><strong>Total Absences:</strong> {{ total_absences }}</p>
+        </div>
+
+        <div class="detail-section">
+            <h3>Absence History</h3>
+            {% if absences %}
+                <div class="table-container">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Notes</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for absence in absences %}
+                                <tr>
+                                    <td>{{ absence.date|date:"M d, Y" }}</td>
+                                    <td>{{ absence.notes|default:"-" }}</td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            {% else %}
+                <div class="empty-state">
+                    <p>No absences recorded for this employee.</p>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}
+
