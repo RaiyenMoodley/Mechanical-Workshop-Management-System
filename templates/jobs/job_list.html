@@ -3,38 +3,61 @@
 {% block title %}Vehicle Checkin - Workshop Manager{% endblock %}
 
 {% block content %}
-<div class="container">
+<div class="container container-wide">
     <div class="page-header">
         <h1>Workshop Vehicle Checkin</h1>
         <a href="{% url 'jobs:job_create' %}" class="btn btn-primary">Add New Vehicle Checkin</a>
     </div>
 
     {% if jobs %}
-        <div class="jobs-list">
-            {% for job in jobs %}
-                <div class="job-card">
-                    <div class="job-header">
-                        <h3>{{ job.customer_name }}</h3>
-                        <span class="status-badge {{ job.get_status_color }}">{{ job.status }}</span>
-                    </div>
-                    <div class="job-details">
-                        <p><strong>Vehicle:</strong> {{ job.vehicle_make }} {{ job.vehicle_model }} ({{ job.vehicle_registration }})</p>
-                        <p><strong>Work Type:</strong> {{ job.get_work_type_display }}</p>
-                        <p><strong>Contact:</strong> {{ job.contact_number }}</p>
-                        <p><strong>Date Received:</strong> {{ job.date_received|date:"M d, Y" }}</p>
-                        {% if job.date_completed %}
-                            <p><strong>Date Completed:</strong> {{ job.date_completed|date:"M d, Y" }}</p>
-                        {% endif %}
-                        {% if job.invoice_number %}
-                            <p><strong>Invoice #:</strong> {{ job.invoice_number }}</p>
-                        {% endif %}
-                    </div>
-                    <div class="job-actions">
-                        <a href="{% url 'jobs:job_detail' job.pk %}" class="btn btn-view">View</a>
-                        <a href="{% url 'jobs:job_update' job.pk %}" class="btn btn-edit">Edit</a>
-                    </div>
-                </div>
-            {% endfor %}
+        <div class="table-container">
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Customer Name</th>
+                        <th>Contact Number</th>
+                        <th>Invoice #</th>
+                        <th>Vehicle</th>
+                        <th>Work Type</th>
+                        <th>Status</th>
+                        <th>Date Received</th>
+                        <th>Date Completed</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for job in jobs %}
+                        <tr>
+                            <td><strong>{{ job.customer_name }}</strong></td>
+                            <td>{{ job.contact_number }}</td>
+                            <td>
+                                {% if job.invoice_number %}
+                                    {{ job.invoice_number }}
+                                {% else %}
+                                    -
+                                {% endif %}
+                            </td>
+                            <td>{{ job.vehicle_make }} {{ job.vehicle_model }} ({{ job.vehicle_registration }})</td>
+                            <td>{{ job.get_work_type_display }}</td>
+                            <td>
+                                <span class="status-badge {{ job.get_status_color }}">{{ job.status }}</span>
+                            </td>
+                            <td>{{ job.date_received|date:"M d, Y" }}</td>
+                            <td>
+                                {% if job.date_completed %}
+                                    {{ job.date_completed|date:"M d, Y" }}
+                                {% else %}
+                                    -
+                                {% endif %}
+                            </td>
+                            <td class="actions">
+                                <a href="{% url 'jobs:job_detail' job.pk %}" class="btn btn-view btn-sm">View</a>
+                                <a href="{% url 'jobs:job_update' job.pk %}" class="btn btn-edit btn-sm">Edit</a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
         </div>
     {% else %}
         <div class="empty-state">
