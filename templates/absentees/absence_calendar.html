@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Absentee Calendar - Workshop Manager{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="page-header">
+        <h1>Absentee Calendar</h1>
+        <div class="header-actions">
+            <a href="{% url 'absentees:absence_create' %}" class="btn btn-primary">Mark Absent Today</a>
+            <a href="{% url 'absentees:employee_list' %}" class="btn btn-secondary">Manage Employees</a>
+        </div>
+    </div>
+
+    <div class="calendar-legend" style="margin-bottom: 1rem; padding: 1rem; background: #f7fafc; border-radius: 8px;">
+        <strong>Legend:</strong>
+        <span style="display: inline-block; width: 20px; height: 20px; background: #e53e3e; margin-left: 1rem; margin-right: 0.5rem; vertical-align: middle; border-radius: 4px;"></span> Absent
+    </div>
+
+    <div id="calendar" style="background: white; padding: 1rem; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);"></div>
+</div>
+
+<!-- FullCalendar CSS -->
+<link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.10/index.global.min.css" rel="stylesheet">
+
+<!-- FullCalendar JS -->
+<script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.10/index.global.min.js"></script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const calendarEl = document.getElementById('calendar');
+    const calendar = new FullCalendar.Calendar(calendarEl, {
+        initialView: 'dayGridMonth',
+        headerToolbar: {
+            left: 'prev,next today',
+            center: 'title',
+            right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
+        },
+        events: '{% url "absentees:absence_events_api" %}',
+        eventDisplay: 'block',
+        height: 'auto',
+        editable: false,
+        selectable: false,
+        eventTimeFormat: {
+            hour: '2-digit',
+            minute: '2-digit',
+            hour12: true
+        }
+    });
+
+    calendar.render();
+});
+</script>
+
+<style>
+.fc-event {
+    cursor: default;
+}
+.fc-event:hover {
+    opacity: 0.9;
+}
+</style>
+{% endblock %}
+

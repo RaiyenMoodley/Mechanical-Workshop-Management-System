@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+
+{% block title %}Employees - Absentee Manager{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="page-header">
+        <h1>Employees</h1>
+        <div class="header-actions">
+            <a href="{% url 'absentees:employee_create' %}" class="btn btn-primary">Add Employee</a>
+            <a href="{% url 'absentees:absence_calendar' %}" class="btn btn-secondary">Back to Calendar</a>
+        </div>
+    </div>
+
+    {% if employees %}
+        <div class="table-container">
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Total Absences</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for employee in employees %}
+                        <tr>
+                            <td>
+                                <a href="{% url 'absentees:employee_detail' employee.pk %}">
+                                    {{ employee.name }}
+                                </a>
+                            </td>
+                            <td>{{ employee.absence_count }}</td>
+                            <td class="actions">
+                                <a href="{% url 'absentees:employee_detail' employee.pk %}" class="btn btn-view btn-sm">View</a>
+                                <a href="{% url 'absentees:employee_delete' employee.pk %}" class="btn btn-danger btn-sm">Delete</a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    {% else %}
+        <div class="empty-state">
+            <p>No employees yet. <a href="{% url 'absentees:employee_create' %}">Add your first employee</a></p>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}
+
